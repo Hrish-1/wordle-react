@@ -6,7 +6,7 @@ function getRandomWord() {
     const words = wordBank.words
     return words[Math.floor(Math.random() * words.length)];
 }
-const word = getRandomWord() 
+const word = getRandomWord()
 console.log(word)
 
 const Board = () => {
@@ -36,14 +36,14 @@ const Board = () => {
     const onEnter = () => {
         if (currAttempt.letter !== 5) return;
         const currWord = board[currAttempt.attempt].join("")
-        if (currWord === word) {
-            setGameOver(true)
-            return
-        }
         setCurrAttempt({
             attempt: currAttempt.attempt + 1,
             letter: 0,
         });
+        if (currWord === word) {
+            setGameOver(true)
+            return
+        }
     }
 
     const onDelete = () => {
