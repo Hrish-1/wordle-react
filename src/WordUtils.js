@@ -17,7 +17,8 @@ export function computeLetterStates(guess, word) {
         return obj
     }
 
-    return letters.map(letter => ({ letter: letter, state: "miss" }))
+    return letters
+        .map(letter => ({ letter: letter, state: "miss" }))
         .map(match)
         .map(exists)
         .map(({ state }) => state)
