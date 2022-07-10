@@ -1,4 +1,4 @@
-function computeLetterStates(guess, word) {
+export function computeLetterStates(guess, word) {
     const lettersToCheck = word.split("")
     const letters = guess.split("")
     function letterState(letter, i) {
