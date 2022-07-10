@@ -1,66 +1,18 @@
-const LetterState = {
-    Miss: 'miss',
-    Match: 'match',
-    Present: 'present'
-}
-
-export function computeLetterStates(
-    guess,
-    answerString
-) {
-    const result = [];
-
-    if (guess.length !== answerString.length) {
-        return result;
+export function computeLetterStates(guess, word) {
+    const lettersToCheck = word.split("")
+    const letters = guess.split("")
+    const letterStates = letters.map(_letter => "miss")
+    for (let i = letters.length - 1; i >= 0; i--) {
+        if (word[i] === letters[i]) {
+            letterStates[i] = "match"
+            lettersToCheck.splice(i, 1)
+        }
     }
-
-    const answer = answerString.split('');
-
-    const guessAsArray = guess.split('');
-
-    const answerLetterCount = {};
-
-    guessAsArray.forEach((letter, index) => {
-        const currentAnswerLetter = answer[index];
-
-        answerLetterCount[currentAnswerLetter] = answerLetterCount[
-            currentAnswerLetter
-        ]
-            ? answerLetterCount[currentAnswerLetter] + 1
-            : 1;
-
-        if (currentAnswerLetter === letter) {
-            result.push(LetterState.Match);
-        } else if (answer.includes(letter)) {
-            result.push(LetterState.Present);
-        } else {
-            result.push(LetterState.Miss);
+    letters.forEach((letter, i) => {
+        if (lettersToCheck.includes(letter) && letterStates[i] !== "match") {
+            letterStates[i] = "present"
+            lettersToCheck.splice(lettersToCheck.indexOf(letter), 1)
         }
-    });
-
-    result.forEach((curResult, resultIndex) => {
-        if (curResult !== LetterState.Present) {
-            return;
-        }
-
-        const guessLetter = guessAsArray[resultIndex];
-
-        answer.forEach((currentAnswerLetter, answerIndex) => {
-            if (currentAnswerLetter !== guessLetter) {
-                return;
-            }
-
-            if (result[answerIndex] === LetterState.Match) {
-                result[resultIndex] = LetterState.Miss;
-            }
-
-            if (answerLetterCount[guessLetter] <= 0) {
-                result[resultIndex] = LetterState.Miss;
-            }
-        });
-
-        answerLetterCount[guessLetter]--;
-    });
-
-    return result;
+    })
+    return letterStates
 }
