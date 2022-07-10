@@ -17,7 +17,7 @@
   height: 50px;
   width: 50px;
   display: flex;
-  color: #fff;
+  color: #000;
   font-weight: bold;
   justify-content: center;
   align-items: center;
@@ -26,12 +26,15 @@
 
 #match {
   background-color: #42713e;
+  color: #fff;
 }
 
 #present {
   background-color: #917f2f;
+  color: #fff;
 }
 
 #miss {
   background-color: #2c3032;
+  color: #fff;
 }
