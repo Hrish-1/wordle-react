@@ -1,18 +1,16 @@
-export function computeLetterStates(guess, word) {
+function computeLetterStates(guess, word) {
     const lettersToCheck = word.split("")
     const letters = guess.split("")
-    const letterStates = letters.map(_letter => "miss")
-    for (let i = letters.length - 1; i >= 0; i--) {
-        if (word[i] === letters[i]) {
-            letterStates[i] = "match"
+    function letterState(letter, i) {
+        if (letter === word[i]) {
             lettersToCheck.splice(i, 1)
+            return "match"
         }
-    }
-    letters.forEach((letter, i) => {
-        if (lettersToCheck.includes(letter) && letterStates[i] !== "match") {
-            letterStates[i] = "present"
+        if (lettersToCheck.includes(letter)) {
             lettersToCheck.splice(lettersToCheck.indexOf(letter), 1)
+            return "present"
         }
-    })
-    return letterStates
+        return "miss"
+    }
+    return letters.map(letterState)
 }
