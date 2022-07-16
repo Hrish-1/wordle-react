@@ -76,14 +76,10 @@ const Board = () => {
         [currAttempt],
     )
 
-    const cache = {}
-    function getStyles(i, j) {
-        if (i >= currAttempt.attempt) return ""
-        if (cache[i]) return cache[i][j]
-        if (cache[i - 1]) delete cache[i - 1]
+    function getStates(i) {
+        if (i >= currAttempt.attempt) return Array(5).fill('')
         const guess = board[i].join("")
-        cache[i] = computeLetterStates(guess, word)
-        return cache[i][j]
+        return computeLetterStates(guess, word)
     }
 
     useEffect(() => {
@@ -93,9 +89,9 @@ const Board = () => {
 
     return (
         <div className="grid">
-            {board.map((row, i) =>
-                row.map((_col, j) => (
-                    <div key={`${i}-${j}`} className="square" id={getStyles(i, j)}>
+            {board.map((_row, i) =>
+                getStates(i).map((state, j) => (
+                    <div key={`${i}-${j}`} className="square" id={state}>
                         {board[i][j]}
                     </div>
                 ))
