@@ -23,7 +23,7 @@ const Board = () => {
     const [gameOver, setGameOver] = useState(false)
 
     const onSelectLetter = (key) => {
-        if (currAttempt.letter > 4) return;
+        if (currAttempt.letter > 4 || currAttempt.attempt > 5) return;
         const newBoard = [...board];
         newBoard[currAttempt.attempt][currAttempt.letter] = key;
         setBoard(newBoard);
